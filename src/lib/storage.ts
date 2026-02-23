@@ -130,11 +130,19 @@ export function generateId(): string {
 }
 
 export function isShopOpen(openingTime: string, closingTime: string): boolean {
+  if (!openingTime || !closingTime) return true; // default open if no times set
   const now = new Date();
   const [oh, om] = openingTime.split(':').map(Number);
   const [ch, cm] = closingTime.split(':').map(Number);
+  if (isNaN(oh) || isNaN(om) || isNaN(ch) || isNaN(cm)) return true; // invalid format → treat as open
   const nowMins = now.getHours() * 60 + now.getMinutes();
   const openMins = oh * 60 + om;
   const closeMins = ch * 60 + cm;
-  return nowMins >= openMins && nowMins <= closeMins;
+  if (closeMins > openMins) {
+    // Normal hours (e.g., 09:00 – 21:00)
+    return nowMins >= openMins && nowMins <= closeMins;
+  } else {
+    // Overnight hours (e.g., 22:00 – 06:00)
+    return nowMins >= openMins || nowMins <= closeMins;
+  }
 }
