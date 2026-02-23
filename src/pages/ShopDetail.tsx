@@ -142,7 +142,7 @@ const ShopDetail = () => {
 
             <div>
               <label className="text-sm font-medium text-foreground mb-1 block">Pickup Time</label>
-              <Input type="time" value={pickupTime} onChange={e => setPickupTime(e.target.value)} className="h-11" />
+              <Input type="text" placeholder="e.g. 6:00 PM" value={pickupTime} onChange={e => setPickupTime(e.target.value)} className="h-11" />
             </div>
 
             <div className="bg-accent rounded-lg p-3 text-center">
