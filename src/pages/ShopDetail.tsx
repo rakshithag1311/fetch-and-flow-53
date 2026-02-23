@@ -4,6 +4,7 @@ import { getShops, getCurrentUser, addOrder, generateId, type OrderItem } from '
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import StatusBadge from '@/components/StatusBadge';
+import { QRCodeSVG } from 'qrcode.react';
 
 const ShopDetail = () => {
   const { shopId } = useParams();
@@ -168,12 +169,15 @@ const ShopDetail = () => {
             <div className="text-5xl">✅</div>
             <h2 className="text-xl font-bold text-foreground">Order Placed!</h2>
             <p className="text-muted-foreground text-sm">Order ID: <strong className="text-foreground">#{orderId.slice(0, 6).toUpperCase()}</strong></p>
-            <div className="bg-muted rounded-xl p-4 mx-auto w-40 h-40 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground">QR Code</p>
-                <p className="text-lg font-mono font-bold text-foreground mt-1">#{orderId.slice(0, 6).toUpperCase()}</p>
-              </div>
+            <div className="bg-white rounded-xl p-4 mx-auto w-48 h-48 flex items-center justify-center">
+              <QRCodeSVG
+                value={`SMARTFETCH-ORDER:${orderId}`}
+                size={160}
+                level="H"
+                includeMargin={false}
+              />
             </div>
+            <p className="text-xs text-muted-foreground">Order: #{orderId.slice(0, 6).toUpperCase()}</p>
             <p className="text-sm text-muted-foreground">Show this at pickup. Pickup at {pickupTime}.</p>
             <Button className="w-full h-12 font-semibold" onClick={() => navigate('/customer')}>
               Back to Home
